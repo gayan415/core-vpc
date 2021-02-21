@@ -1,3 +1,4 @@
+# vpc
 resource "aws_vpc" "vpc" {
   cidr_block           = var.vpc_cidr_block
   instance_tenancy     = "default"
@@ -13,7 +14,7 @@ resource "aws_vpc" "vpc" {
   )
 }
 
-# Create /23 subnets for DMZ networks
+# public subnets
 resource "aws_subnet" "public_subnets" {
   count                   = var.az_count
   vpc_id                  = aws_vpc.vpc.id
@@ -29,7 +30,7 @@ resource "aws_subnet" "public_subnets" {
   )
 }
 
-# Create /21 subnets for App networks
+# pribate subnets
 resource "aws_subnet" "private_subnets" {
   count                   = var.az_count
   vpc_id                  = aws_vpc.vpc.id
