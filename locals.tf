@@ -5,6 +5,4 @@ locals {
     environment          = var.environment
     platform             = var.platform
   }
-
-  dmzNet  = "${cidrsubnet(var.vpcNet, 2, 0)}"
 }

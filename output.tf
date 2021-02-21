@@ -1,6 +1,6 @@
-output "id" {
+output "vpcid" {
   description = "The id of the provisioned VPC"
-  value = aws_vpc.application_vpc.id
+  value = aws_vpc.vpc.id
 }
 
 output "public_subnets" {

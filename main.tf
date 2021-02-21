@@ -17,8 +17,8 @@ resource "aws_vpc" "vpc" {
 resource "aws_subnet" "public_subnets" {
   count                   = var.az_count
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "${cidrsubnet(local.dmzNet, 2, count.index)}"
-  availability_zone       = "${data.aws_availability_zones.available.names["${count.index}"]}"
+  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, (count.index + 1) * 10)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
 
   tags = merge(
@@ -33,8 +33,8 @@ resource "aws_subnet" "public_subnets" {
 resource "aws_subnet" "private_subnets" {
   count                   = var.az_count
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = "${cidrsubnet(local.vpcNet, 2, count.index + 1)}"
-  availability_zone       = "${data.aws_availability_zones.available.names["${count.index}"]}"
+  cidr_block              = cidrsubnet(var.vpc_cidr_block, 8, ((count.index) * 10) + 100)
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = false
 
   tags = merge(
